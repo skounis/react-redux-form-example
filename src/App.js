@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { LoginPage } from './LoginPage';
 import { SecretPage } from './SecretPage';
+import { loginAction } from "./_redux/actions/loginAction";
+import { logoutAction } from "./_redux/actions/logoutAction";
+
 import './App.css';
 
 class App extends Component {
@@ -17,6 +21,7 @@ class App extends Component {
   }
 
   handleLogin(authenticated) {
+    this.props.loginAction();
     this.setState({ 
       isLoggedIn: authenticated,
       isSubmitted: true 
@@ -24,6 +29,7 @@ class App extends Component {
   }
 
   handleLogout(authenticated) {
+    this.props.logoutAction();
     this.setState({ 
       isLoggedIn: false,
       isSubmitted: false 
@@ -44,6 +50,7 @@ class App extends Component {
 
   }
   render() {
+    console.log('Redux state: ', this.props);
     return (
       <div className="App jumbotron">
         <div className="container">
@@ -60,4 +67,13 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+  loginAction: () => dispatch(loginAction),
+  logoutAction: () => dispatch(logoutAction)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
