@@ -29,7 +29,8 @@ class LoginPage extends React.Component {
 
     const authenticated = this.fakeLogin(username, password); 
     console.log('Authenticated: ', authenticated)
-    this.setState({ isLoggedIn: authenticated });
+    // this.setState({ isLoggedIn: authenticated });
+    this.props.onLoginSubmit(authenticated);
   }
 
   fakeLogin(username, password) {
@@ -51,7 +52,7 @@ class LoginPage extends React.Component {
               <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
               {submitted && !username &&
                 <div className="help-block">
-                  <small class="form-text text-muted">Username is required.</small>
+                  <small className="form-text text-muted">Username is required.</small>
                 </div>
               }
             </div>
@@ -60,7 +61,7 @@ class LoginPage extends React.Component {
               <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
               {submitted && !password &&
                 <div className="help-block">
-                  <small class="form-text text-muted">Password is required.</small>
+                  <small className="form-text text-muted">Password is required.</small>
                 </div>
               }
             </div>
