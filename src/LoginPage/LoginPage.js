@@ -1,4 +1,5 @@
 import React from 'react';
+import { userService } from '../_services';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -37,10 +38,7 @@ class LoginPage extends React.Component {
   }
 
   fakeLogin(username, password) {
-    const SECRET_NAME = 'John';
-    const SECRET_PASSWORD = 'Smith'
-  
-    return SECRET_NAME === username && SECRET_PASSWORD === password
+    return userService.login(username, password);
   };
 
   render() {
@@ -76,6 +74,8 @@ class LoginPage extends React.Component {
             <div className="form-group">
               <button className="btn btn-primary">Login</button>
             </div>
+
+            <p>Demo combinations: <code>Hari</code> / <code>Seldon</code> and <code>Salvor</code> / <code>Hardin</code></p>
           </form>
         </div>
       </div>
