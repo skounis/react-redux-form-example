@@ -26,7 +26,18 @@ class LoginPage extends React.Component {
     this.setState({ submitted: true });
     const { username, password } = this.state;
     console.log('Handle Submit for: ', username, password)
+
+    const authenticated = this.fakeLogin(username, password); 
+    console.log('Authenticated: ', authenticated)
+    this.setState({ isLoggedIn: authenticated });
   }
+
+  fakeLogin(username, password) {
+    const SECRET_NAME = 'John';
+    const SECRET_PASSWORD = 'Smith'
+  
+    return SECRET_NAME === username && SECRET_PASSWORD === password
+  };
 
   render() {
     const { username, password, submitted } = this.state;
