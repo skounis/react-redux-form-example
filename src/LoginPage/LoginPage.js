@@ -17,7 +17,10 @@ class LoginPage extends React.Component {
   handleChange(e) {
     const { name, value } = e.target;
     console.log('Handle Change for: ', name, value)
-    this.setState({ [name]: value });
+    this.setState({ 
+      [name]: value, 
+      submitted: false
+    });
   }
 
   handleSubmit(e) {
@@ -44,7 +47,7 @@ class LoginPage extends React.Component {
     const { username, password, submitted } = this.state;
     return (
       <div className="row justify-content-center">
-        <div className="col-md-6">
+        <div className="col-md-6">     
           <h2>Login</h2>
           <form name="form" onSubmit={this.handleSubmit}>
             <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
@@ -65,6 +68,11 @@ class LoginPage extends React.Component {
                 </div>
               }
             </div>
+
+            { !this.state.isLoggedIn && this.state.submitted &&
+              <div className="alert alert-danger">Username or password is incorrect</div>
+            } 
+
             <div className="form-group">
               <button className="btn btn-primary">Login</button>
             </div>

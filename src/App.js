@@ -30,25 +30,29 @@ class App extends Component {
     });
   }
 
+  route(isLoggedIn, loginHandler, logoutHandler) {
+    let page = <LoginPage 
+      isLoggedIn={isLoggedIn} 
+      onLoginSubmit={loginHandler} />;
+
+    if (isLoggedIn) {
+      page = <SecretPage 
+        onLogout={logoutHandler}/>;
+    }
+
+    return page;
+
+  }
   render() {
     return (
       <div className="App jumbotron">
         <div className="container">
-          {!this.state.isLoggedIn && this.state.isSubmitted &&
-            <div className="row justify-content-center">
-              <div className="col-md-6">
-                <div className="alert alert-danger">Username or password is incorrect</div>
-              </div>
-            </div>
-          }
-          {!this.state.isLoggedIn &&
-            <LoginPage 
-              isLoggedIn={this.state.isLoggedIn} 
-              onLoginSubmit={this.handleLogin} />
-          }
-          {this.state.isLoggedIn &&
-            <SecretPage 
-            onLogout={this.handleLogout}/>
+          {
+            this.route(
+              this.state.isLoggedIn,
+              this.handleLogin,
+              this.handleLogout
+              )
           }
         </div>
       </div>
