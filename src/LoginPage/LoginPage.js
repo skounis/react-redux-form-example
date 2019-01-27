@@ -1,5 +1,4 @@
 import React from 'react';
-import { userService } from '../_services';
 
 class LoginPage extends React.Component {
   constructor(props) {
