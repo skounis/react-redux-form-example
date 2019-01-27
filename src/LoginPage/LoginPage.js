@@ -11,13 +11,11 @@ class LoginPage extends React.Component {
       username: '',
       password: '',
       submitted: false,
-      isLoggedIn: false
     };
   }
 
   handleChange(e) {
     const { name, value } = e.target;
-    console.log('Handle Change for: ', name, value)
     this.setState({ 
       [name]: value, 
       submitted: false
@@ -29,17 +27,8 @@ class LoginPage extends React.Component {
 
     this.setState({ submitted: true });
     const { username, password } = this.state;
-    console.log('Handle Submit for: ', username, password)
-
-    const authenticated = this.fakeLogin(username, password); 
-    console.log('Authenticated: ', authenticated)
-    // this.setState({ isLoggedIn: authenticated });
-    this.props.onLoginSubmit(authenticated);
+    this.props.onLoginSubmit({ username, password });
   }
-
-  fakeLogin(username, password) {
-    return userService.login(username, password);
-  };
 
   render() {
     const { username, password, submitted } = this.state;
@@ -67,7 +56,11 @@ class LoginPage extends React.Component {
               }
             </div>
 
-            { !this.state.isLoggedIn && this.state.submitted &&
+            {/* { !this.state.user && this.state.submitted &&
+              <div className="alert alert-danger">Username or password is incorrect</div>
+            }  */}
+
+            { this.state.submitted &&
               <div className="alert alert-danger">Username or password is incorrect</div>
             } 
 

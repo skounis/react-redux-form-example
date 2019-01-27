@@ -6,7 +6,7 @@ export default (state, action) => {
       case authConstants.LOGIN_SUCCESS:
       case authConstants.LOGOUT:
         return {
-          isLoggedIn: action.payload
+          user: action.payload
         };
       default:
         return state;

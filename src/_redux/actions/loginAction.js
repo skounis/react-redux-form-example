@@ -1,11 +1,15 @@
 import { authConstants } from '../constants';
+import { userService } from '../../_services';
 
-export const loginSuccessAction = {
-  type: authConstants.LOGIN_SUCCESS,
-  payload: true
-};
-
-export const loginFailureAction = {
-  type: authConstants.LOGIN_FAILURE,
-  payload: false
+function login(auth) {
+  // return user or null
+  return userService.login(auth.username, auth.password);
+}
+export const loginAction = credentials => {
+  const user = login(credentials);
+  const action = {
+    type: (!!user) ? authConstants.LOGIN_SUCCESS : authConstants.LOGIN_FAILURE,
+    payload: user
+  }
+  return action;
 };
