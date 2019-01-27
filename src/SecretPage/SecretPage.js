@@ -1,25 +1,66 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form'
 
+const validate = values => {
+  const errors = {}
+  if (!values.fullname) {
+    errors.fullname = 'Required'
+  } else if (values.fullname.length > 15) {
+    errors.fullname = 'Must be 15 characters or less'
+  }
+  if (!values.email) {
+    errors.email = 'Required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address'
+  }
+  if (!values.age) {
+    errors.age = 'Required'
+  } else if (isNaN(Number(values.age))) {
+    errors.age = 'Must be a number'
+  } else if (Number(values.age) < 18) {
+    errors.age = 'Sorry, you must be at least 18 years old'
+  }
+  return errors
+}
+
+const warn = values => {
+  const warnings = {}
+  if (values.age < 19) {
+    warnings.age = 'Hmm, you seem a bit young...'
+  }
+  return warnings
+}
+
+const renderField = ({
+  name,
+  input,
+  label,
+  type,
+  meta: { touched, error, warning }
+}) => (
+  <div className="form-group">
+    <label htmlFor={name}>{label}</label>
+    <div>
+      <input {...input} placeholder={label} type={type} className="form-control"/>
+      {touched &&
+        ((error && <small className="form-text text-danger">{error}</small>) ||
+          (warning && <small className="form-text text-warning">{warning}</small>))}
+    </div>
+  </div>
+)
 
 let ContactForm = props => {
-  const { handleSubmit } = props
+  const { handleSubmit, pristine, reset, submitting  } = props
   return (
     <form onSubmit={handleSubmit}>
+      <Field name="fullname" component={renderField} type="text" label="Full name" className="form-control"/>
+      <Field name="email" component={renderField} type="email" label="Email" className="form-control"/>
+      <Field name="age" component={renderField} type="number" label="Age" className="form-control"/>
       <div className="form-group">
-        <label htmlFor="fullname">Full name</label>
-        <Field name="fullname" component="input" type="text" className="form-control"/>           
-      </div>
-      <div className="form-group">
-        <label htmlFor="email">Email</label>
-        <Field name="email" component="input" type="email" className="form-control"/>
-      </div>
-      <div className="form-group">
-        <label htmlFor="age">Age</label>
-        <Field name="age" component="input" type="number" className="form-control"/>
-      </div>
-      <div className="form-group">
-        <button className="btn btn-primary">Submit</button>
+        <button className="btn btn-primary" disabled={submitting}>Submit</button>
+        <button className="btn btn-outline-primary ml-3" type="button" disabled={pristine || submitting} onClick={reset}>
+          Clear Values
+        </button>
       </div>
     </form>
     )
@@ -27,7 +68,9 @@ let ContactForm = props => {
 
 ContactForm = reduxForm({
   // a unique name for the form
-  form: 'contact'
+  form: 'contact',
+  validate, // <--- validation function given to redux-form
+  warn // <--- warning function given to redux-form
 })(ContactForm)
 
 
@@ -36,7 +79,6 @@ class SecretPage extends React.Component {
   constructor(props) {
     super(props);
     this.handleLogout = this.handleLogout.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleLogout(e) {
@@ -44,15 +86,11 @@ class SecretPage extends React.Component {
     console.log('Loging out ...');
     this.props.onLogout();
   }
-
-  handleChange(e) {
-    const { name, value } = e.target;
-    console.log('Secret Page, handle change:', name, value);
-  }
-
+  
   submit = values => {
     // print the form values to the console
-    console.log(values)
+    console.log('Thank you for your submission. We promise to keep all the information that you share with us confidential. ', values)
+    alert('Thank you. Please check the console for details.')
   }
 
   render() {
@@ -60,32 +98,15 @@ class SecretPage extends React.Component {
       <div className="row justify-content-center">
         <div className="col-md-6">
           <h2>Welcome</h2>
-          <p>Welconme <code>{this.props.user.username}</code>. You have unlocked a secret page.</p>
-          <p>It's now time to introduce yourself:</p>
-          {/* <form name="form" onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="fullname">Full name</label>
-              <input type="text" className="form-control" name="fullname" onChange={this.handleChange} />              
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input type="email" className="form-control" name="email" onChange={this.handleChange} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="age">Age</label>
-              <input type="number" className="form-control" name="age" onChange={this.handleChange} />
-            </div>
-            <div className="form-group">
-              <button className="btn btn-primary">Submit</button>
-            </div>
-          </form> */}
+          <p>Welcome <code>{this.props.user.username}</code>.</p> 
+          <p>You have unlocked a secret page. It's now time to introduce yourself:</p>
           <ContactForm onSubmit={this.submit} />
-          <div className="form-group">
+          <div className="form-group mt-5">
             <p>Do not forget to  
             <button 
               type="button"
               onClick={this.handleLogout}
-              className="btn btn-link pt-0 pb-1">logout</button> 
+              className="btn btn-link pt-0 pb-1">log out</button> 
               and keep this page secret.
               </p>
           </div>
