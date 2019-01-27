@@ -1,6 +1,11 @@
 import { authConstants } from '../constants';
 
-export default (state, action) => {
+
+const initialState = {
+  user: null
+};
+
+export default (state = initialState, action) => {
     switch (action.type) {
       case authConstants.LOGIN_FAILURE:
       case authConstants.LOGIN_SUCCESS:

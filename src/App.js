@@ -43,7 +43,7 @@ class App extends Component {
         <div className="container">
           {
             this.route(
-              this.props.user,
+              this.props.authReducer.user,
               this.handleLogin,
               this.handleLogout
               )

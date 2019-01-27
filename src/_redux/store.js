@@ -1,8 +1,4 @@
 import { createStore } from "redux";
-import authReducer from "./reducers/authReducer";
+import rootReducer from "./reducers";
 
-function configureStore(state = { isLoggedIn: false }) {
-  return createStore(authReducer, state);
-}
-
-export default configureStore;
+export default createStore(rootReducer);
