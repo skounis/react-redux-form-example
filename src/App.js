@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { LoginPage } from './LoginPage';
 import { SecretPage } from './SecretPage';
-import { loginAction } from "./_redux/actions/loginAction";
+import { loginSuccessAction, loginFailureAction } from "./_redux/actions/loginAction";
 import { logoutAction } from "./_redux/actions/logoutAction";
 
 import './App.css';
@@ -15,15 +15,18 @@ class App extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.state = {
-      isLoggedIn: false,
       isSubmitted: false
     };
   }
 
   handleLogin(authenticated) {
-    this.props.loginAction();
+    if(authenticated) {
+      this.props.loginSuccessAction();
+    } else {
+      this.props.loginFailureAction();
+    }
     this.setState({ 
-      isLoggedIn: authenticated,
+      // isLoggedIn: authenticated,
       isSubmitted: true 
     });
   }
@@ -31,7 +34,7 @@ class App extends Component {
   handleLogout(authenticated) {
     this.props.logoutAction();
     this.setState({ 
-      isLoggedIn: false,
+      // isLoggedIn: false,
       isSubmitted: false 
     });
   }
@@ -56,7 +59,7 @@ class App extends Component {
         <div className="container">
           {
             this.route(
-              this.state.isLoggedIn,
+              this.props.isLoggedIn,
               this.handleLogin,
               this.handleLogout
               )
@@ -72,7 +75,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginAction: () => dispatch(loginAction),
+  loginSuccessAction: () => dispatch(loginSuccessAction),
+  loginFailureAction: () => dispatch(loginFailureAction),
   logoutAction: () => dispatch(logoutAction)
 });
 
