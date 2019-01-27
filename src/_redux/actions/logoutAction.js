@@ -1,4 +1,6 @@
+import { authConstants } from '../constants';
+
 export const logoutAction = {
-  type: "AUTH",
+  type: authConstants.LOGOUT,
   payload: false
 };
