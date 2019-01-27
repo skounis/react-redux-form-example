@@ -19,6 +19,7 @@ function login(username, password) {
         return item.password === password && item.username === username;
     }) || null;
 
+    localStorage.setItem('user', JSON.stringify(user));
     return user;
 }
 

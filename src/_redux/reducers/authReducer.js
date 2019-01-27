@@ -1,8 +1,9 @@
 import { authConstants } from '../constants';
 
+let user = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
-  user: null
+  user: user
 };
 
 export default (state = initialState, action) => {
