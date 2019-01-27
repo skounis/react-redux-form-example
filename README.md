@@ -66,3 +66,16 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## References
+- [Lifting State Up](https://reactjs.org/tutorial/tutorial.html#lifting-state-up)
+- [8 React conditional rendering methods](https://blog.logrocket.com/conditional-rendering-in-react-c6b0e5af381e)
+- [All React Conditional Rendering Techniques](https://www.robinwieruch.de/conditional-rendering-react/)
+- [How to use Redux in ReactJS with real-life examples](https://medium.freecodecamp.org/how-to-use-redux-in-reactjs-with-real-life-examples-687ab4441b85)
+- [React Redux Tutorial for Beginners: The Definitive Guide (2019)](https://www.valentinog.com/blog/redux/#React_Redux_tutorial_Redux_store_methods)
+- [Back to Basics: What's the Difference between an Action and an Action Creator in Redux.js?](https://decembersoft.com/posts/whats-the-difference-between-action-and-action-creator-in-redux-js/)
+- [Redux Hero Part 2: Actions and Their Consequences (a Fun Introduction to redux-actions)](https://decembersoft.com/posts/redux-hero-part-2-actions-and-their-consequences-a-fun-introduction-to-redux-actions/)
+
+### Bonus
+Fictional characters 
+- [Foundation](https://en.wikipedia.org/wiki/Foundation_(Asimov_novel))
