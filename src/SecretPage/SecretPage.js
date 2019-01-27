@@ -1,4 +1,35 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form'
+
+
+let ContactForm = props => {
+  const { handleSubmit } = props
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label htmlFor="fullname">Full name</label>
+        <Field name="fullname" component="input" type="text" className="form-control"/>           
+      </div>
+      <div className="form-group">
+        <label htmlFor="email">Email</label>
+        <Field name="email" component="input" type="email" className="form-control"/>
+      </div>
+      <div className="form-group">
+        <label htmlFor="age">Age</label>
+        <Field name="age" component="input" type="number" className="form-control"/>
+      </div>
+      <div className="form-group">
+        <button className="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    )
+}
+
+ContactForm = reduxForm({
+  // a unique name for the form
+  form: 'contact'
+})(ContactForm)
+
 
 class SecretPage extends React.Component {
 
@@ -19,6 +50,11 @@ class SecretPage extends React.Component {
     console.log('Secret Page, handle change:', name, value);
   }
 
+  submit = values => {
+    // print the form values to the console
+    console.log(values)
+  }
+
   render() {
     return (
       <div className="row justify-content-center">
@@ -26,7 +62,7 @@ class SecretPage extends React.Component {
           <h2>Welcome</h2>
           <p>Welconme <code>{this.props.user.username}</code>. You have unlocked a secret page.</p>
           <p>It's now time to introduce yourself:</p>
-          <form name="form" onSubmit={this.handleSubmit}>
+          {/* <form name="form" onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label htmlFor="fullname">Full name</label>
               <input type="text" className="form-control" name="fullname" onChange={this.handleChange} />              
@@ -42,8 +78,8 @@ class SecretPage extends React.Component {
             <div className="form-group">
               <button className="btn btn-primary">Submit</button>
             </div>
-          </form>
-
+          </form> */}
+          <ContactForm onSubmit={this.submit} />
           <div className="form-group">
             <p>Do not forget to  
             <button 
